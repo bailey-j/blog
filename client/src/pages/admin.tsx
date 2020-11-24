@@ -26,6 +26,7 @@ export function Admin() {
       ...formInput,
       [e.target.name]: e.target.value,
     });
+    console.log(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -42,23 +43,6 @@ export function Admin() {
       .catch((error) => alert(error));
     e.preventDefault();
   };
-
-  // React.useEffect(() => {
-  // POST request using fetch inside useEffect React hook
-  // const requestOptions = {
-  // method: "POST",
-  // headers: { "Content-Type": "application/json" },
-  // body: encode({
-  //   "form-name": "contact-us",
-  //   ...formInput,
-  // }),
-  // fetch(`http://localhost:3000/posts`, requestOptions).then((response) =>
-  // response.json()
-  // );
-  // .then(data => setPostId(data.id));
-
-  // empty dependency array means this effect will only run once (like componentDidMount in classes)
-  // }, []);
 
   return (
     <Page>
@@ -123,6 +107,7 @@ export function Admin() {
                       name="image"
                       type="file"
                       value={formInput.imageUrl}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="file-path-wrapper">

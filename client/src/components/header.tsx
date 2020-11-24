@@ -4,6 +4,7 @@ import "../index.css";
 
 export default function Header() {
   const [click, setClick] = useState(false);
+  const userName = "Jozeene";
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -37,7 +38,9 @@ export default function Header() {
           </ul>
         </div>
         <div className="navbar-container">
-          <p className="login">Logged in as ...</p>
+          <p className="login">
+            Logged in as <b>{userName}</b>
+          </p>
         </div>
       </nav>
     </>

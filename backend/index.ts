@@ -17,7 +17,23 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({storage: storage}).single("image");
+const upload = multer({
+  storage: storage,
+  fileFilter: function(req, file, cb) {
+    if( file.mimetype == "image/png" || 
+        file.mimetype == "image/jpg"
+        ){
+          cb(null, true)
+    }else{
+      console.log("only jpegs")
+      cb(null, false)
+    }
+  },
+  limits : {
+    fileSize: 1024 * 1024 * 2
+  }
+
+}).single("image");
 
 //mongo connection
 mongoose.Promise = global.Promise;
@@ -38,10 +54,6 @@ routes(app);
 
 app.get("/", (req, res) =>
   res.send(`Wow Our Server is Running on PORT: ${PORT}`)
-);
-
-app.post("/", (req, res) =>
-  alert("sent")
 );
 
 app.listen(PORT, () => console.log(`We're running port ${PORT}`));

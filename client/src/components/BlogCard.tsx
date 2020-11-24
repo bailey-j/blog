@@ -3,7 +3,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 
 export default function BlogCard(props: any) {
-  console.log("PROPS: ", props);
+  // console.log("PROPS: ", props);
   return (
     <>
       <li className="cards__item">

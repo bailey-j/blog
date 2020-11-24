@@ -29,7 +29,7 @@ export default function BlogFeed() {
 
             <li className="cards__item">
               <Link className="cards__item__link" to="#">
-                <h4>Blog Post 2</h4>
+                <h4>Static Post</h4>
                 <figure className="cards__item__pic-wrap">
                   <img
                     className="cards__item__img"

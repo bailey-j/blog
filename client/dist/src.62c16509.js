@@ -32380,6 +32380,8 @@ function Header() {
       click = _a[0],
       setClick = _a[1];
 
+  var userName = "Jozeene";
+
   var handleClick = function handleClick() {
     return setClick(!click);
   };
@@ -32424,7 +32426,7 @@ function Header() {
     className: "navbar-container"
   }, react_1.default.createElement("p", {
     className: "login"
-  }, "Logged in as ..."))));
+  }, "Logged in as ", react_1.default.createElement("b", null, userName)))));
 }
 
 exports.default = Header;
@@ -38187,7 +38189,7 @@ var moment_1 = __importDefault(require("moment"));
 var react_router_dom_1 = require("react-router-dom");
 
 function BlogCard(props) {
-  console.log("PROPS: ", props);
+  // console.log("PROPS: ", props);
   return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("li", {
     className: "cards__item"
   }, react_1.default.createElement(react_router_dom_1.Link, {
@@ -38263,7 +38265,7 @@ function BlogFeed() {
   }, react_1.default.createElement(react_router_dom_1.Link, {
     className: "cards__item__link",
     to: "#"
-  }, react_1.default.createElement("h4", null, "Blog Post 2"), react_1.default.createElement("figure", {
+  }, react_1.default.createElement("h4", null, "Static Post"), react_1.default.createElement("figure", {
     className: "cards__item__pic-wrap"
   }, react_1.default.createElement("img", {
     className: "cards__item__img",
@@ -38387,6 +38389,7 @@ function Admin() {
     var _a;
 
     setFormInput(__assign(__assign({}, formInput), (_a = {}, _a[e.target.name] = e.target.value, _a)));
+    console.log(e.target.value);
   };
 
   var handleSubmit = function handleSubmit(e) {
@@ -38405,22 +38408,7 @@ function Admin() {
       return alert(error);
     });
     e.preventDefault();
-  }; // React.useEffect(() => {
-  // POST request using fetch inside useEffect React hook
-  // const requestOptions = {
-  // method: "POST",
-  // headers: { "Content-Type": "application/json" },
-  // body: encode({
-  //   "form-name": "contact-us",
-  //   ...formInput,
-  // }),
-  // fetch(`http://localhost:3000/posts`, requestOptions).then((response) =>
-  // response.json()
-  // );
-  // .then(data => setPostId(data.id));
-  // empty dependency array means this effect will only run once (like componentDidMount in classes)
-  // }, []);
-
+  };
 
   return react_1.default.createElement(page_1.Page, null, react_1.default.createElement("div", {
     className: "hero-container"
@@ -38484,7 +38472,8 @@ function Admin() {
   }, react_1.default.createElement("span", null, "Upload Image"), react_1.default.createElement("input", {
     name: "image",
     type: "file",
-    value: formInput.imageUrl
+    value: formInput.imageUrl,
+    onChange: handleChange
   })), react_1.default.createElement("div", {
     className: "file-path-wrapper"
   }, react_1.default.createElement("input", {
@@ -38562,7 +38551,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51176" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59958" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -6,7 +6,7 @@ mongoose.set('useFindAndModify', false);
 
 export const addNewPost = (req: { body: any }, res: any) => {
   let newPost = new Post(req.body);
-
+/////////////////////////////////////
   newPost.save((err, Post) => {
     if (err) {
       res.send(err);
