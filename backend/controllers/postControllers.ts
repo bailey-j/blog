@@ -1,12 +1,23 @@
+import fileupload from 'express-fileupload'
 import mongoose from "mongoose";
-import { PostSchema } from "../models/postModel";
+import { Post, BodyProps } from "../models/postModel";
+import fs from 'fs'
+import path from 'path'
+// import { upload } from '../index'
 
-const Post = mongoose.model('Post', PostSchema);
 mongoose.set('useFindAndModify', false);
 
-export const addNewPost = (req: { body: any }, res: any) => {
-  let newPost = new Post(req.body);
-/////////////////////////////////////
+export const addNewPost = (req: any, res: any) => {
+  console.log(req.body)
+  let newPost = new Post({
+    postId: req.body.postId,
+    datePublished: req.body.datePublished,
+    postTitle: req.body.postTitle,
+    postBody: req.body.postBody,
+  })
+  //imageUrl: req.files.imageUrl, // alows object to be saved
+  // newPost.imageUrl.file = fs.readFileSync()
+
   newPost.save((err, Post) => {
     if (err) {
       res.send(err);

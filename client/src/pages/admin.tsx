@@ -1,4 +1,6 @@
+import { dirname } from "path";
 import React from "react";
+import { pathToFileURL } from "url";
 import { Page } from "../components/page";
 
 export function Admin() {
@@ -10,8 +12,8 @@ export function Admin() {
     postTitle: "",
     postId: "",
     postBody: "",
-    imageUrl: "",
   });
+  const [imageUrl, setFile] = React.useState({});
 
   const encode = (data) => {
     return Object.keys(data)
@@ -26,7 +28,11 @@ export function Admin() {
       ...formInput,
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.value);
+    // setFile({
+    //   imageUrl: e.target.files[0].name,
+    // });
+    setFile({ imageUrl: e.target.files[0].name });
+    console.log(imageUrl);
   };
 
   const handleSubmit = (e) => {
@@ -36,9 +42,10 @@ export function Admin() {
       body: encode({
         "form-name": "add-post",
         ...formInput,
+        imageUrl,
       }),
     };
-    fetch(`http://localhost:3000/posts`, requestOptions)
+    fetch("http://localhost:3000/posts", requestOptions)
       .then(() => alert("Sent!"))
       .catch((error) => alert(error));
     e.preventDefault();
@@ -57,6 +64,7 @@ export function Admin() {
               className="col s12 center"
               onSubmit={handleSubmit}
               encType="multipart/form-data"
+              action="/admin"
             >
               <div className="row">
                 <div className="input-field col s9">
@@ -104,11 +112,12 @@ export function Admin() {
                   <div className="btn blue darken-1 waves-effect">
                     <span>Upload Image</span>
                     <input
-                      name="image"
                       type="file"
-                      value={formInput.imageUrl}
+                      name="imageUrl"
+                      value={imageUrl[0]}
                       onChange={handleChange}
                     />
+                    {console.log(imageUrl[0].imageUrl)}
                   </div>
                   <div className="file-path-wrapper">
                     <input className="file-path validate" type="text" />
@@ -118,7 +127,6 @@ export function Admin() {
               <button
                 className="btn blue darken-1 waves-effect waves-light"
                 type="submit"
-                name="action"
               >
                 Submit
               </button>

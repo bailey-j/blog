@@ -4,8 +4,8 @@ node_modules
 # testing
 
 # production
-dist/
-.cache/*
+dist
+uploads/
 
 # misc
 .DS_Store

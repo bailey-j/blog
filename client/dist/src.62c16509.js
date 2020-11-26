@@ -38189,18 +38189,18 @@ var moment_1 = __importDefault(require("moment"));
 var react_router_dom_1 = require("react-router-dom");
 
 function BlogCard(props) {
-  // console.log("PROPS: ", props);
+  console.log("PROPS: ", props.post);
   return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("li", {
     className: "cards__item"
   }, react_1.default.createElement(react_router_dom_1.Link, {
     className: "cards__item__link",
-    to: "#"
+    to: props.post && props.post.postId
   }, react_1.default.createElement("h4", null, props.post.postTitle), react_1.default.createElement("div", {
     className: "cards__item__pic-wrap"
   }, react_1.default.createElement("img", {
     className: "cards__item__img",
     alt: "Blog Image",
-    src: props.post.imageUrl
+    src: props.post.imageUrl && props.post.imageUrl.filename
   })), react_1.default.createElement("div", {
     className: "cards__item__info"
   }, react_1.default.createElement("p", null, moment_1.default("" + props.post.datePublished).format("DD MMM YYYY")), react_1.default.createElement("h5", {
@@ -38306,7 +38306,51 @@ function Home() {
 }
 
 exports.Home = Home;
-},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/BlogFeed":"../src/components/BlogFeed.tsx"}],"../src/pages/tech.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/BlogFeed":"../src/components/BlogFeed.tsx"}],"../src/components/NewsItem.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+function NewsItem(props) {
+  var newsId = props.newsId;
+
+  var _a = react_1.default.useState(undefined),
+      newsItem = _a[0],
+      setNewsItem = _a[1];
+
+  var _b = react_1.default.useState(""),
+      error = _b[0],
+      setError = _b[1];
+
+  react_1.default.useEffect(function () {
+    fetch("https://hacker-news.firebaseio.com/v0/item/" + newsId + ".json", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    }).then(function (response) {
+      return response.json();
+    }).then(function (newsItem) {
+      return setNewsItem(newsItem);
+    }).catch(setError);
+  }, []);
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("div", null, react_1.default.createElement("h5", null, newsItem === null || newsItem === void 0 ? void 0 : newsItem.title), react_1.default.createElement("a", {
+    href: newsItem === null || newsItem === void 0 ? void 0 : newsItem.url
+  }, react_1.default.createElement("p", null, "Find out more HERE..."))));
+}
+
+exports.default = NewsItem;
+},{"react":"../node_modules/react/index.js"}],"../src/pages/tech.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -38324,14 +38368,48 @@ var react_1 = __importDefault(require("react"));
 
 var page_1 = require("../components/page");
 
+var NewsItem_1 = __importDefault(require("../components/NewsItem"));
+
 function Tech() {
+  var _a = react_1.default.useState([]),
+      news = _a[0],
+      setNews = _a[1];
+
+  var _b = react_1.default.useState(""),
+      error = _b[0],
+      setError = _b[1];
+
+  react_1.default.useEffect(function () {
+    fetch("https://hacker-news.firebaseio.com/v0/jobstories.json", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    }).then(function (response) {
+      return response.json();
+    }).then(function (news) {
+      return setNews(news.splice(0, 20));
+    }).catch(setError);
+  }, []);
   return react_1.default.createElement(page_1.Page, null, react_1.default.createElement("div", {
     className: "hero-container"
-  }, react_1.default.createElement("h1", null, "Tech")), react_1.default.createElement("div", null, react_1.default.createElement("h2", null, ".")));
+  }, react_1.default.createElement("h1", null, "Tech Jobs")), react_1.default.createElement("div", {
+    className: "container"
+  }, react_1.default.createElement("h3", null, "View the latest Tech jobs below (from Hacker News)"), react_1.default.createElement("div", {
+    className: "cards__container"
+  }, react_1.default.createElement("ul", {
+    className: "cards__items"
+  }, news.map(function (newsId, key) {
+    return react_1.default.createElement("li", {
+      key: key
+    }, react_1.default.createElement(NewsItem_1.default, {
+      newsId: newsId
+    }));
+  })))));
 }
 
 exports.Tech = Tech;
-},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx"}],"../src/pages/admin.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/NewsItem":"../src/components/NewsItem.tsx"}],"../src/pages/admin.tsx":[function(require,module,exports) {
 "use strict";
 
 var __assign = this && this.__assign || function () {
@@ -38373,11 +38451,14 @@ function Admin() {
   var _a = react_1.default.useState({
     postTitle: "",
     postId: "",
-    postBody: "",
-    imageUrl: ""
+    postBody: ""
   }),
       formInput = _a[0],
       setFormInput = _a[1];
+
+  var _b = react_1.default.useState({}),
+      imageUrl = _b[0],
+      setFile = _b[1];
 
   var encode = function encode(data) {
     return Object.keys(data).map(function (key) {
@@ -38388,8 +38469,14 @@ function Admin() {
   var handleChange = function handleChange(e) {
     var _a;
 
-    setFormInput(__assign(__assign({}, formInput), (_a = {}, _a[e.target.name] = e.target.value, _a)));
-    console.log(e.target.value);
+    setFormInput(__assign(__assign({}, formInput), (_a = {}, _a[e.target.name] = e.target.value, _a))); // setFile({
+    //   imageUrl: e.target.files[0].name,
+    // });
+
+    setFile({
+      imageUrl: e.target.files[0].name
+    });
+    console.log(imageUrl);
   };
 
   var handleSubmit = function handleSubmit(e) {
@@ -38398,9 +38485,11 @@ function Admin() {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: encode(__assign({
+      body: encode(__assign(__assign({
         "form-name": "add-post"
-      }, formInput))
+      }, formInput), {
+        imageUrl: imageUrl
+      }))
     };
     fetch("http://localhost:3000/posts", requestOptions).then(function () {
       return alert("Sent!");
@@ -38421,7 +38510,8 @@ function Admin() {
   }, react_1.default.createElement("form", {
     className: "col s12 center",
     onSubmit: handleSubmit,
-    encType: "multipart/form-data"
+    encType: "multipart/form-data",
+    action: "/admin"
   }, react_1.default.createElement("div", {
     className: "row"
   }, react_1.default.createElement("div", {
@@ -38470,24 +38560,107 @@ function Admin() {
   }, react_1.default.createElement("div", {
     className: "btn blue darken-1 waves-effect"
   }, react_1.default.createElement("span", null, "Upload Image"), react_1.default.createElement("input", {
-    name: "image",
     type: "file",
-    value: formInput.imageUrl,
+    name: "imageUrl",
+    value: imageUrl[0],
     onChange: handleChange
-  })), react_1.default.createElement("div", {
+  }), console.log(imageUrl[0].imageUrl)), react_1.default.createElement("div", {
     className: "file-path-wrapper"
   }, react_1.default.createElement("input", {
     className: "file-path validate",
     type: "text"
   })))), react_1.default.createElement("button", {
     className: "btn blue darken-1 waves-effect waves-light",
-    type: "submit",
-    name: "action"
+    type: "submit"
   }, "Submit"))))));
 }
 
 exports.Admin = Admin;
-},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx"}],"../src/index.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx"}],"../src/components/BlogPost.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+var moment_1 = __importDefault(require("moment"));
+
+function BlogPost(props) {
+  console.log("PROPS", props);
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("div", {
+    className: "cards__item__pic-wrap"
+  }, react_1.default.createElement("img", {
+    className: "cards__item__img",
+    alt: "Blog Image",
+    src: props.post.imageUrl && props.post.imageUrl.filename
+  })), react_1.default.createElement("h4", null, props.post.postTitle), react_1.default.createElement("div", {
+    className: "cards__item__info"
+  }, react_1.default.createElement("p", null, moment_1.default("" + props.post.datePublished).format("DD MMM YYYY")), react_1.default.createElement("h5", {
+    className: "cards__item__text"
+  }, props.post.postBody)));
+}
+
+exports.default = BlogPost;
+},{"react":"../node_modules/react/index.js","moment":"../node_modules/moment/moment.js"}],"../src/pages/post.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Post = void 0;
+
+var react_1 = __importDefault(require("react"));
+
+var page_1 = require("../components/page");
+
+var BlogPost_1 = __importDefault(require("../components/BlogPost"));
+
+var react_router_dom_1 = require("react-router-dom");
+
+function Post() {
+  var postId = react_router_dom_1.useParams().postId;
+
+  var _a = react_1.default.useState([]),
+      post = _a[0],
+      setPost = _a[1];
+
+  var _b = react_1.default.useState(""),
+      error = _b[0],
+      setError = _b[1];
+
+  react_1.default.useEffect(function () {
+    fetch("http://localhost:3000/post/" + postId, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(function (response) {
+      return response.json();
+    }).then(setPost).catch(setError);
+  }, []);
+  console.log("post:", post);
+  return react_1.default.createElement(page_1.Page, null, error && "" + error, react_1.default.createElement("div", {
+    className: "main-container center"
+  }, post ? react_1.default.createElement(BlogPost_1.default, {
+    post: post
+  }) : "Nothing to see here"));
+}
+
+exports.Post = Post;
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/BlogPost":"../src/components/BlogPost.tsx","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/index.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -38512,6 +38685,8 @@ var tech_1 = require("./pages/tech");
 
 var admin_1 = require("./pages/admin");
 
+var post_1 = require("./pages/post");
+
 var router = react_1.default.createElement(react_router_dom_1.BrowserRouter, null, react_1.default.createElement(react_router_dom_1.Switch, null, react_1.default.createElement(react_router_dom_1.Route, {
   exact: true,
   path: "/"
@@ -38521,9 +38696,12 @@ var router = react_1.default.createElement(react_router_dom_1.BrowserRouter, nul
 }, react_1.default.createElement(tech_1.Tech, null)), react_1.default.createElement(react_router_dom_1.Route, {
   exact: true,
   path: "/admin"
-}, react_1.default.createElement(admin_1.Admin, null))));
+}, react_1.default.createElement(admin_1.Admin, null)), react_1.default.createElement(react_router_dom_1.Route, {
+  exact: true,
+  path: "/:postId"
+}, react_1.default.createElement(post_1.Post, null))));
 react_dom_1.default.render(router, document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./pages/home":"../src/pages/home.tsx","./pages/tech":"../src/pages/tech.tsx","./pages/admin":"../src/pages/admin.tsx"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./pages/home":"../src/pages/home.tsx","./pages/tech":"../src/pages/tech.tsx","./pages/admin":"../src/pages/admin.tsx","./pages/post":"../src/pages/post.tsx"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -38551,7 +38729,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59958" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49696" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
