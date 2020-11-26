@@ -233,7 +233,7 @@ p {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 90vh;
+    height: 40vh;
     position: absolute;
     top: 80px;
     left: -100%;
@@ -243,6 +243,7 @@ p {
 
   .nav-menu.active {
     background: #bfbec2;
+    margin-right: 0;
     left: auto;
     opacity: 1;
     transition: all 0.5s ease;
@@ -274,7 +275,7 @@ p {
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(-100%, 60%);
+    transform: translate(-100%, 10%);
     font-size: 1.8rem;
     cursor: pointer;
   }
@@ -293,7 +294,7 @@ p {
     text-align: center;
     margin: 2rem auto;
     border-radius: 4px;
-    width: 80%;
+    width: 90%;
     text-decoration: none;
     font-size: 1.5rem;
     background-color: transparent;

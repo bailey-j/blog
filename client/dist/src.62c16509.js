@@ -38189,7 +38189,10 @@ var moment_1 = __importDefault(require("moment"));
 var react_router_dom_1 = require("react-router-dom");
 
 function BlogCard(props) {
-  console.log("PROPS: ", props.post);
+  if (props.post.postBody.length > 200) {
+    props.post.postBody = props.post.postBody.substring(0, 200) + " . . .";
+  }
+
   return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("li", {
     className: "cards__item"
   }, react_1.default.createElement(react_router_dom_1.Link, {
@@ -38200,12 +38203,12 @@ function BlogCard(props) {
   }, react_1.default.createElement("img", {
     className: "cards__item__img",
     alt: "Blog Image",
-    src: props.post.imageUrl && props.post.imageUrl.filename
+    src: props.post.imageUrl
   })), react_1.default.createElement("div", {
     className: "cards__item__info"
-  }, react_1.default.createElement("p", null, moment_1.default("" + props.post.datePublished).format("DD MMM YYYY")), react_1.default.createElement("h5", {
+  }, react_1.default.createElement("p", null, moment_1.default("" + props.post.datePublished).format("DD MMM YYYY")), react_1.default.createElement("p", {
     className: "cards__item__text"
-  }, props.post.postBody)))));
+  }, props.post.postBody), react_1.default.createElement("h6", null, "Read more ...")))));
 }
 
 exports.default = BlogCard;
@@ -38223,8 +38226,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var react_1 = __importDefault(require("react"));
-
-var react_router_dom_1 = require("react-router-dom");
 
 var BlogCard_1 = __importDefault(require("./BlogCard"));
 
@@ -38255,31 +38256,18 @@ function BlogFeed() {
     className: "cards__container"
   }, react_1.default.createElement("ul", {
     className: "cards__items"
-  }, posts.map(function (post, key) {
+  }, posts.sort(function (a, b) {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  }).reverse().map(function (post, key) {
     return react_1.default.createElement(BlogCard_1.default, {
       key: key,
       post: post
     });
-  }), react_1.default.createElement("li", {
-    className: "cards__item"
-  }, react_1.default.createElement(react_router_dom_1.Link, {
-    className: "cards__item__link",
-    to: "#"
-  }, react_1.default.createElement("h4", null, "Static Post"), react_1.default.createElement("figure", {
-    className: "cards__item__pic-wrap"
-  }, react_1.default.createElement("img", {
-    className: "cards__item__img",
-    alt: "Blog Image",
-    src: "https://images.pexels.com/photos/214574/pexels-photo-214574.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-  })), react_1.default.createElement("div", {
-    className: "cards__item__info"
-  }, react_1.default.createElement("h5", {
-    className: "cards__item__text"
-  }, "Blog Post 2"))))))));
+  })))));
 }
 
 exports.default = BlogFeed;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./BlogCard":"../src/components/BlogCard.tsx"}],"../src/pages/home.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./BlogCard":"../src/components/BlogCard.tsx"}],"../src/pages/home.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -38412,6 +38400,142 @@ exports.Tech = Tech;
 },{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/NewsItem":"../src/components/NewsItem.tsx"}],"../src/pages/admin.tsx":[function(require,module,exports) {
 "use strict";
 
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Admin = void 0;
+
+var react_1 = __importDefault(require("react"));
+
+var react_router_dom_1 = require("react-router-dom");
+
+var page_1 = require("../components/page");
+
+function Admin() {
+  return react_1.default.createElement(page_1.Page, null, react_1.default.createElement("div", {
+    className: "hero-container"
+  }, react_1.default.createElement("h1", null, "Admin")), react_1.default.createElement("div", {
+    className: "container"
+  }, react_1.default.createElement("div", {
+    className: "section"
+  }, react_1.default.createElement("div", {
+    className: "row"
+  }, react_1.default.createElement("div", {
+    className: "col s12 m6"
+  }, react_1.default.createElement("div", {
+    className: "card blue-grey darken-1"
+  }, react_1.default.createElement("div", {
+    className: "card-content white center"
+  }, react_1.default.createElement(react_router_dom_1.Link, {
+    to: "/admin/create"
+  }, react_1.default.createElement("h5", {
+    className: "card-title"
+  }, "Create New Post"))))), react_1.default.createElement("div", {
+    className: "col s12 m6"
+  }, react_1.default.createElement("div", {
+    className: "card blue-grey darken-1"
+  }, react_1.default.createElement("div", {
+    className: "card-content white center"
+  }, react_1.default.createElement(react_router_dom_1.Link, {
+    to: "/admin/posts"
+  }, react_1.default.createElement("h5", {
+    className: "card-title"
+  }, "Edit Existing Posts")))))))));
+}
+
+exports.Admin = Admin;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../components/page":"../src/components/page.tsx"}],"../src/components/BlogPost.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+var moment_1 = __importDefault(require("moment"));
+
+function BlogPost(props) {
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("div", {
+    className: "cards__item__pic-wrap"
+  }, react_1.default.createElement("img", {
+    className: "cards__item__img",
+    alt: "Blog Image",
+    src: props.post.imageUrl
+  })), react_1.default.createElement("h4", null, props.post.postTitle), react_1.default.createElement("div", {
+    className: "cards__item__info"
+  }, react_1.default.createElement("p", null, moment_1.default("" + props.post.datePublished).format("DD MMM YYYY")), react_1.default.createElement("h5", {
+    className: "cards__container cards__item__text"
+  }, props.post.postBody)));
+}
+
+exports.default = BlogPost;
+},{"react":"../node_modules/react/index.js","moment":"../node_modules/moment/moment.js"}],"../src/pages/post.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Post = void 0;
+
+var react_1 = __importDefault(require("react"));
+
+var page_1 = require("../components/page");
+
+var BlogPost_1 = __importDefault(require("../components/BlogPost"));
+
+var react_router_dom_1 = require("react-router-dom");
+
+function Post() {
+  var postId = react_router_dom_1.useParams().postId;
+
+  var _a = react_1.default.useState([]),
+      post = _a[0],
+      setPost = _a[1];
+
+  var _b = react_1.default.useState(""),
+      error = _b[0],
+      setError = _b[1];
+
+  react_1.default.useEffect(function () {
+    fetch("http://localhost:3000/post/" + postId, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(function (response) {
+      return response.json();
+    }).then(setPost).catch(setError);
+  }, []);
+  console.log("post:", post);
+  return react_1.default.createElement(page_1.Page, null, error && "" + error, react_1.default.createElement("div", {
+    className: "main-container center"
+  }, post ? react_1.default.createElement(BlogPost_1.default, {
+    post: post
+  }) : "Nothing to see here"));
+}
+
+exports.Post = Post;
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/BlogPost":"../src/components/BlogPost.tsx","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/pages/createPost.tsx":[function(require,module,exports) {
+"use strict";
+
 var __assign = this && this.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -38437,13 +38561,13 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Admin = void 0;
+exports.CreatePost = void 0;
 
 var react_1 = __importDefault(require("react"));
 
 var page_1 = require("../components/page");
 
-function Admin() {
+function CreatePost() {
   var postTitle = react_1.default.useRef(null);
   var postId = react_1.default.useRef(null);
   var postBody = react_1.default.useRef(null);
@@ -38451,14 +38575,11 @@ function Admin() {
   var _a = react_1.default.useState({
     postTitle: "",
     postId: "",
-    postBody: ""
+    postBody: "",
+    imageUrl: ""
   }),
       formInput = _a[0],
       setFormInput = _a[1];
-
-  var _b = react_1.default.useState({}),
-      imageUrl = _b[0],
-      setFile = _b[1];
 
   var encode = function encode(data) {
     return Object.keys(data).map(function (key) {
@@ -38469,14 +38590,7 @@ function Admin() {
   var handleChange = function handleChange(e) {
     var _a;
 
-    setFormInput(__assign(__assign({}, formInput), (_a = {}, _a[e.target.name] = e.target.value, _a))); // setFile({
-    //   imageUrl: e.target.files[0].name,
-    // });
-
-    setFile({
-      imageUrl: e.target.files[0].name
-    });
-    console.log(imageUrl);
+    setFormInput(__assign(__assign({}, formInput), (_a = {}, _a[e.target.name] = e.target.value, _a)));
   };
 
   var handleSubmit = function handleSubmit(e) {
@@ -38485,11 +38599,9 @@ function Admin() {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: encode(__assign(__assign({
+      body: encode(__assign({
         "form-name": "add-post"
-      }, formInput), {
-        imageUrl: imageUrl
-      }))
+      }, formInput))
     };
     fetch("http://localhost:3000/posts", requestOptions).then(function () {
       return alert("Sent!");
@@ -38553,30 +38665,27 @@ function Admin() {
     onChange: handleChange
   }), react_1.default.createElement("label", {
     htmlFor: "post_body"
-  }))), react_1.default.createElement("div", {
+  }, "Body"))), react_1.default.createElement("div", {
     className: "row"
   }, react_1.default.createElement("div", {
-    className: "file-field input-field"
-  }, react_1.default.createElement("div", {
-    className: "btn blue darken-1 waves-effect"
-  }, react_1.default.createElement("span", null, "Upload Image"), react_1.default.createElement("input", {
-    type: "file",
-    name: "imageUrl",
-    value: imageUrl[0],
-    onChange: handleChange
-  }), console.log(imageUrl[0].imageUrl)), react_1.default.createElement("div", {
-    className: "file-path-wrapper"
+    className: "input-field col s12"
   }, react_1.default.createElement("input", {
-    className: "file-path validate",
-    type: "text"
-  })))), react_1.default.createElement("button", {
+    id: "img_url",
+    className: "validate",
+    type: "text",
+    name: "imageUrl",
+    value: formInput.imageUrl,
+    onChange: handleChange
+  }), react_1.default.createElement("label", {
+    htmlFor: "img_url"
+  }, "Image URL"))), react_1.default.createElement("button", {
     className: "btn blue darken-1 waves-effect waves-light",
     type: "submit"
   }, "Submit"))))));
 }
 
-exports.Admin = Admin;
-},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx"}],"../src/components/BlogPost.tsx":[function(require,module,exports) {
+exports.CreatePost = CreatePost;
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx"}],"../src/components/BlogList.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -38593,23 +38702,29 @@ var react_1 = __importDefault(require("react"));
 
 var moment_1 = __importDefault(require("moment"));
 
-function BlogPost(props) {
-  console.log("PROPS", props);
-  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("div", {
-    className: "cards__item__pic-wrap"
-  }, react_1.default.createElement("img", {
-    className: "cards__item__img",
-    alt: "Blog Image",
-    src: props.post.imageUrl && props.post.imageUrl.filename
-  })), react_1.default.createElement("h4", null, props.post.postTitle), react_1.default.createElement("div", {
+var react_router_dom_1 = require("react-router-dom");
+
+function BlogCard(props) {
+  if (props.post.postBody.length > 200) {
+    props.post.postBody = props.post.postBody.substring(0, 200) + " . . .";
+  }
+
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("li", {
+    className: "cards__item"
+  }, react_1.default.createElement(react_router_dom_1.Link, {
+    className: "cards__item__link",
+    to: "/admin/posts/" + (props.post && props.post.postId)
+  }, react_1.default.createElement("div", {
     className: "cards__item__info"
-  }, react_1.default.createElement("p", null, moment_1.default("" + props.post.datePublished).format("DD MMM YYYY")), react_1.default.createElement("h5", {
-    className: "cards__item__text"
-  }, props.post.postBody)));
+  }, react_1.default.createElement("span", {
+    className: "left"
+  }, props.post.postTitle), "   ", react_1.default.createElement("span", {
+    className: "right"
+  }, moment_1.default("" + props.post.datePublished).format("DD MMM YYYY"))))));
 }
 
-exports.default = BlogPost;
-},{"react":"../node_modules/react/index.js","moment":"../node_modules/moment/moment.js"}],"../src/pages/post.tsx":[function(require,module,exports) {
+exports.default = BlogCard;
+},{"react":"../node_modules/react/index.js","moment":"../node_modules/moment/moment.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/pages/view.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -38621,46 +38736,211 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Post = void 0;
+exports.View = void 0;
 
 var react_1 = __importDefault(require("react"));
 
 var page_1 = require("../components/page");
 
-var BlogPost_1 = __importDefault(require("../components/BlogPost"));
+var BlogList_1 = __importDefault(require("../components/BlogList"));
 
-var react_router_dom_1 = require("react-router-dom");
-
-function Post() {
-  var postId = react_router_dom_1.useParams().postId;
-
+function View() {
   var _a = react_1.default.useState([]),
-      post = _a[0],
-      setPost = _a[1];
+      posts = _a[0],
+      setPosts = _a[1];
 
   var _b = react_1.default.useState(""),
       error = _b[0],
       setError = _b[1];
 
   react_1.default.useEffect(function () {
-    fetch("http://localhost:3000/post/" + postId, {
+    fetch("http://localhost:3000/posts", {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Accept: "application/json"
       }
     }).then(function (response) {
       return response.json();
-    }).then(setPost).catch(setError);
+    }).then(function (posts) {
+      return setPosts(posts);
+    }).catch(setError);
   }, []);
-  console.log("post:", post);
-  return react_1.default.createElement(page_1.Page, null, error && "" + error, react_1.default.createElement("div", {
-    className: "main-container center"
-  }, post ? react_1.default.createElement(BlogPost_1.default, {
-    post: post
-  }) : "Nothing to see here"));
+  return react_1.default.createElement(page_1.Page, null, react_1.default.createElement("div", {
+    className: "hero-container"
+  }, react_1.default.createElement("h1", null, "Admin")), react_1.default.createElement("div", {
+    className: "container"
+  }, react_1.default.createElement("div", {
+    className: "section center"
+  }, react_1.default.createElement("h2", null, "Blog Posts"), error && "" + error, react_1.default.createElement("div", {
+    className: "cards"
+  }, react_1.default.createElement("div", {
+    className: "cards__container"
+  }, react_1.default.createElement("ul", {
+    className: "cards__items"
+  }, posts.sort(function (a, b) {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  }).reverse().map(function (post, key) {
+    return react_1.default.createElement(BlogList_1.default, {
+      key: key,
+      post: post
+    });
+  })))))));
 }
 
-exports.Post = Post;
-},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/BlogPost":"../src/components/BlogPost.tsx","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/index.tsx":[function(require,module,exports) {
+exports.View = View;
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/BlogList":"../src/components/BlogList.tsx"}],"../src/pages/edit.tsx":[function(require,module,exports) {
+"use strict";
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Edit = void 0;
+
+var react_1 = __importDefault(require("react"));
+
+var page_1 = require("../components/page");
+
+function Edit() {
+  var postTitle = react_1.default.useRef(null);
+  var postId = react_1.default.useRef(null);
+  var postBody = react_1.default.useRef(null);
+
+  var _a = react_1.default.useState({
+    postTitle: "",
+    postId: "",
+    postBody: "",
+    imageUrl: ""
+  }),
+      formInput = _a[0],
+      setFormInput = _a[1];
+
+  var encode = function encode(data) {
+    return Object.keys(data).map(function (key) {
+      return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
+    }).join("&");
+  };
+
+  var handleChange = function handleChange(e) {
+    var _a;
+
+    setFormInput(__assign(__assign({}, formInput), (_a = {}, _a[e.target.name] = e.target.value, _a)));
+  };
+
+  var handleSubmit = function handleSubmit(e) {
+    var requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: encode(__assign({
+        "form-name": "add-post"
+      }, formInput))
+    };
+    fetch("http://localhost:3000/posts", requestOptions).then(function () {
+      return alert("Sent!");
+    }).catch(function (error) {
+      return alert(error);
+    });
+    e.preventDefault();
+  };
+
+  return react_1.default.createElement(page_1.Page, null, react_1.default.createElement("div", {
+    className: "hero-container"
+  }, react_1.default.createElement("h1", null, "Admin")), react_1.default.createElement("div", {
+    className: "container"
+  }, react_1.default.createElement("div", {
+    className: "section"
+  }, react_1.default.createElement("h4", null, "Edit Post"), react_1.default.createElement("div", {
+    className: "container"
+  }, react_1.default.createElement("form", {
+    className: "col s12 center",
+    onSubmit: handleSubmit,
+    encType: "multipart/form-data",
+    action: "/admin"
+  }, react_1.default.createElement("div", {
+    className: "row"
+  }, react_1.default.createElement("div", {
+    className: "input-field col s9"
+  }, react_1.default.createElement("input", {
+    placeholder: "Enter Title Here",
+    id: "post_title",
+    ref: postTitle,
+    type: "text",
+    className: "validate",
+    name: "postTitle",
+    value: formInput.postTitle,
+    onChange: handleChange
+  }), react_1.default.createElement("label", {
+    htmlFor: "post_title"
+  }, "Title")), react_1.default.createElement("div", {
+    className: "input-field col s3"
+  }, react_1.default.createElement("input", {
+    placeholder: "Enter ID Here",
+    id: "post_id",
+    ref: postId,
+    type: "text",
+    className: "validate",
+    name: "postId",
+    value: formInput.postId,
+    onChange: handleChange
+  }), react_1.default.createElement("label", {
+    htmlFor: "post_id"
+  }, "ID"))), react_1.default.createElement("div", {
+    className: "row"
+  }, react_1.default.createElement("div", {
+    className: "input-field col s12"
+  }, react_1.default.createElement("textarea", {
+    id: "post_body",
+    ref: postBody,
+    className: "materialize-textarea",
+    name: "postBody",
+    value: formInput.postBody,
+    onChange: handleChange
+  }), react_1.default.createElement("label", {
+    htmlFor: "post_body"
+  }, "Body"))), react_1.default.createElement("div", {
+    className: "row"
+  }, react_1.default.createElement("div", {
+    className: "input-field col s12"
+  }, react_1.default.createElement("input", {
+    id: "img_url",
+    className: "validate",
+    type: "text",
+    name: "imageUrl",
+    value: formInput.imageUrl,
+    onChange: handleChange
+  }), react_1.default.createElement("label", {
+    htmlFor: "img_url"
+  }, "Image URL"))), react_1.default.createElement("button", {
+    className: "btn blue darken-1 waves-effect waves-light",
+    type: "submit"
+  }, "Submit"))))));
+}
+
+exports.Edit = Edit;
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx"}],"../src/index.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -38687,6 +38967,12 @@ var admin_1 = require("./pages/admin");
 
 var post_1 = require("./pages/post");
 
+var createPost_1 = require("./pages/createPost");
+
+var view_1 = require("./pages/view");
+
+var edit_1 = require("./pages/edit");
+
 var router = react_1.default.createElement(react_router_dom_1.BrowserRouter, null, react_1.default.createElement(react_router_dom_1.Switch, null, react_1.default.createElement(react_router_dom_1.Route, {
   exact: true,
   path: "/"
@@ -38698,10 +38984,19 @@ var router = react_1.default.createElement(react_router_dom_1.BrowserRouter, nul
   path: "/admin"
 }, react_1.default.createElement(admin_1.Admin, null)), react_1.default.createElement(react_router_dom_1.Route, {
   exact: true,
+  path: "/admin/create"
+}, react_1.default.createElement(createPost_1.CreatePost, null)), react_1.default.createElement(react_router_dom_1.Route, {
+  exact: true,
+  path: "/admin/posts"
+}, react_1.default.createElement(view_1.View, null)), react_1.default.createElement(react_router_dom_1.Route, {
+  exact: true,
+  path: "/admin/posts/:postId"
+}, react_1.default.createElement(edit_1.Edit, null)), react_1.default.createElement(react_router_dom_1.Route, {
+  exact: true,
   path: "/:postId"
 }, react_1.default.createElement(post_1.Post, null))));
 react_dom_1.default.render(router, document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./pages/home":"../src/pages/home.tsx","./pages/tech":"../src/pages/tech.tsx","./pages/admin":"../src/pages/admin.tsx","./pages/post":"../src/pages/post.tsx"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./pages/home":"../src/pages/home.tsx","./pages/tech":"../src/pages/tech.tsx","./pages/admin":"../src/pages/admin.tsx","./pages/post":"../src/pages/post.tsx","./pages/createPost":"../src/pages/createPost.tsx","./pages/view":"../src/pages/view.tsx","./pages/edit":"../src/pages/edit.tsx"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

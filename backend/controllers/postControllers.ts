@@ -1,9 +1,6 @@
 import fileupload from 'express-fileupload'
 import mongoose from "mongoose";
 import { Post, BodyProps } from "../models/postModel";
-import fs from 'fs'
-import path from 'path'
-// import { upload } from '../index'
 
 mongoose.set('useFindAndModify', false);
 
@@ -12,11 +9,10 @@ export const addNewPost = (req: any, res: any) => {
   let newPost = new Post({
     postId: req.body.postId,
     datePublished: req.body.datePublished,
+    imageUrl: req.body.imageUrl,
     postTitle: req.body.postTitle,
     postBody: req.body.postBody,
   })
-  //imageUrl: req.files.imageUrl, // alows object to be saved
-  // newPost.imageUrl.file = fs.readFileSync()
 
   newPost.save((err, Post) => {
     if (err) {
