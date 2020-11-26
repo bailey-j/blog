@@ -7,13 +7,15 @@ export function Admin() {
   const postTitle = React.useRef(null);
   const postId = React.useRef(null);
   const postBody = React.useRef(null);
+  const imageUrl = React.useRef(null);
 
   const [formInput, setFormInput] = React.useState({
     postTitle: "",
     postId: "",
     postBody: "",
+    imageUrl: "",
   });
-  const [imageUrl, setFile] = React.useState({});
+  // const [imageUrl, setFile] = React.useState({});
 
   const encode = (data) => {
     return Object.keys(data)
@@ -31,8 +33,8 @@ export function Admin() {
     // setFile({
     //   imageUrl: e.target.files[0].name,
     // });
-    setFile({ imageUrl: e.target.files[0].name });
-    console.log(imageUrl);
+    // setFile({ imageUrl: e.target.files[0].name });
+    console.log(formInput.imageUrl);
   };
 
   const handleSubmit = (e) => {
@@ -104,6 +106,7 @@ export function Admin() {
                     value={formInput.postBody}
                     onChange={handleChange}
                   />
+
                   <label htmlFor="post_body"></label>
                 </div>
               </div>
@@ -113,11 +116,13 @@ export function Admin() {
                     <span>Upload Image</span>
                     <input
                       type="file"
+                      id="imageUrl"
+                      ref={imageUrl}
                       name="imageUrl"
-                      value={imageUrl[0]}
+                      value={formInput.imageUrl}
                       onChange={handleChange}
                     />
-                    {console.log(imageUrl[0].imageUrl)}
+                    {console.log(formInput.imageUrl)}
                   </div>
                   <div className="file-path-wrapper">
                     <input className="file-path validate" type="text" />

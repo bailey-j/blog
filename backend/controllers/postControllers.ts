@@ -13,9 +13,10 @@ export const addNewPost = (req: any, res: any) => {
     postId: req.body.postId,
     datePublished: req.body.datePublished,
     postTitle: req.body.postTitle,
+    // imageUrl: req.body.imageUrl,
     postBody: req.body.postBody,
   })
-  //imageUrl: req.files.imageUrl, // alows object to be saved
+  newPost.imageUrl = req.files, // alows object to be saved
   // newPost.imageUrl.file = fs.readFileSync()
 
   newPost.save((err, Post) => {

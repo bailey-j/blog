@@ -38447,18 +38447,17 @@ function Admin() {
   var postTitle = react_1.default.useRef(null);
   var postId = react_1.default.useRef(null);
   var postBody = react_1.default.useRef(null);
+  var imageUrl = react_1.default.useRef(null);
 
   var _a = react_1.default.useState({
     postTitle: "",
     postId: "",
-    postBody: ""
+    postBody: "",
+    imageUrl: ""
   }),
       formInput = _a[0],
-      setFormInput = _a[1];
+      setFormInput = _a[1]; // const [imageUrl, setFile] = React.useState({});
 
-  var _b = react_1.default.useState({}),
-      imageUrl = _b[0],
-      setFile = _b[1];
 
   var encode = function encode(data) {
     return Object.keys(data).map(function (key) {
@@ -38472,11 +38471,9 @@ function Admin() {
     setFormInput(__assign(__assign({}, formInput), (_a = {}, _a[e.target.name] = e.target.value, _a))); // setFile({
     //   imageUrl: e.target.files[0].name,
     // });
+    // setFile({ imageUrl: e.target.files[0].name });
 
-    setFile({
-      imageUrl: e.target.files[0].name
-    });
-    console.log(imageUrl);
+    console.log(formInput.imageUrl);
   };
 
   var handleSubmit = function handleSubmit(e) {
@@ -38561,10 +38558,12 @@ function Admin() {
     className: "btn blue darken-1 waves-effect"
   }, react_1.default.createElement("span", null, "Upload Image"), react_1.default.createElement("input", {
     type: "file",
+    id: "imageUrl",
+    ref: imageUrl,
     name: "imageUrl",
-    value: imageUrl[0],
+    value: formInput.imageUrl,
     onChange: handleChange
-  }), console.log(imageUrl[0].imageUrl)), react_1.default.createElement("div", {
+  }), console.log(formInput.imageUrl)), react_1.default.createElement("div", {
     className: "file-path-wrapper"
   }, react_1.default.createElement("input", {
     className: "file-path validate",

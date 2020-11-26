@@ -60,7 +60,7 @@ app.get("/", (req, res) =>
   // res.sendFile(__dirname + "/index.html")
 );
 
-app.post("/", async (req, res) =>{
+app.post("/posts", async (req, res) =>{
     if(req.files){
     console.log(req)
     const file = req.files.imageUrl;
