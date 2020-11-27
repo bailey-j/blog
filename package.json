@@ -13,7 +13,7 @@
   "scripts": {
     "client install": "npm install --prefix client",
     "build": "tsc",
-    "start": "tsc && node index.ts",
+    "start": "node index.ts",
     "server": "nodemon index.ts",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
