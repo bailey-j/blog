@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Post, BodyProps } from "../models/postModel";
+import { Post } from "../models/postModel.js";
 
 mongoose.set('useFindAndModify', false);
 

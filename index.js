@@ -2,14 +2,15 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyparser from "body-parser";
 import cors from "cors";
-import routes from "./routes/blogRoutes";
+import routes from './routes/blogRoutes.js'
 import path from 'path'
+import mongoURI from "./config/keys.js"
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 //configs
-const db = require("./config/keys").mongoURI;
+const db = mongoURI.mongoURI;
 
 //mongo connection
 mongoose.Promise = global.Promise;
