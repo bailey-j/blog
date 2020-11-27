@@ -2,9 +2,6 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 export interface BodyProps extends mongoose.Document {
-  postId: {
-    type: String,
-  },
   datePublished: {
     type: Date,
   },
@@ -20,9 +17,6 @@ export interface BodyProps extends mongoose.Document {
 }
 
 export const PostSchema = new Schema ({
-  postId: {
-    type: String,
-  },
   datePublished: {
     type: Date,
     default: Date.now

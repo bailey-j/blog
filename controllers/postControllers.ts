@@ -6,7 +6,6 @@ mongoose.set('useFindAndModify', false);
 export const addNewPost = (req: any, res: any) => {
   console.log(req.body)
   let newPost = new Post({
-    postId: req.body.postId,
     datePublished: req.body.datePublished,
     imageUrl: req.body.imageUrl,
     postTitle: req.body.postTitle,
@@ -31,7 +30,7 @@ export const getPosts = (req: any, res: any) => {
 };
 
 export const getPostById = (req: {params: any}, res: any) => {
-  Post.findOne({ postId: req.params.postId }, (err, Post) => {
+  Post.findOne({ _id: req.params._id }, (err, Post) => {
     if (err) {
       res.send(err);
     }
@@ -40,7 +39,7 @@ export const getPostById = (req: {params: any}, res: any) => {
 };
 
 export const updatePost = (req: { body: any, params: any }, res: any) => {
-  Post.findOneAndUpdate({ postId: req.params.postId }, req.body, {new: true}, (err, Post) => {
+  Post.findOneAndUpdate({ _id: req.params._id }, req.body, {new: true}, (err, Post) => {
     if (err) {
       res.send(err);
     }
@@ -49,7 +48,7 @@ export const updatePost = (req: { body: any, params: any }, res: any) => {
 };
 
 export const deletePost = (req: any, res: any) => {
-  Post.deleteOne({ postId: req.params.postId}, (err) => {
+  Post.deleteOne({ _id: req.params._id}, (err) => {
     if (err) {
       res.send(err);
     }

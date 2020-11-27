@@ -17,6 +17,8 @@ export function View() {
       .then((posts) => setPosts(posts))
       .catch(setError);
   }, []);
+
+  console.log("PROPS", posts);
   return (
     <Page>
       <div className="hero-container">

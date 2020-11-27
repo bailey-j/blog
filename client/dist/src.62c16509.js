@@ -38197,7 +38197,7 @@ function BlogCard(props) {
     className: "cards__item"
   }, react_1.default.createElement(react_router_dom_1.Link, {
     className: "cards__item__link",
-    to: props.post && props.post.postId
+    to: props.post && props.post._id
   }, react_1.default.createElement("h4", null, props.post.postTitle), react_1.default.createElement("div", {
     className: "cards__item__pic-wrap"
   }, react_1.default.createElement("img", {
@@ -38524,7 +38524,6 @@ function Post() {
       return response.json();
     }).then(setPost).catch(setError);
   }, []);
-  console.log("post:", post);
   return react_1.default.createElement(page_1.Page, null, error && "" + error, react_1.default.createElement("div", {
     className: "main-container center"
   }, post ? react_1.default.createElement(BlogPost_1.default, {
@@ -38705,6 +38704,8 @@ var moment_1 = __importDefault(require("moment"));
 var react_router_dom_1 = require("react-router-dom");
 
 function BlogCard(props) {
+  console.log("POST ID", props.post._id);
+
   if (props.post.postBody.length > 200) {
     props.post.postBody = props.post.postBody.substring(0, 200) + " . . .";
   }
@@ -38713,7 +38714,7 @@ function BlogCard(props) {
     className: "cards__item"
   }, react_1.default.createElement(react_router_dom_1.Link, {
     className: "cards__item__link",
-    to: "/admin/posts/" + (props.post && props.post.postId)
+    to: "/admin/posts/" + (props.post && props.post._id)
   }, react_1.default.createElement("div", {
     className: "cards__item__info"
   }, react_1.default.createElement("span", {
@@ -38765,6 +38766,7 @@ function View() {
       return setPosts(posts);
     }).catch(setError);
   }, []);
+  console.log("PROPS", posts);
   return react_1.default.createElement(page_1.Page, null, react_1.default.createElement("div", {
     className: "hero-container"
   }, react_1.default.createElement("h1", null, "Admin")), react_1.default.createElement("div", {
@@ -38821,12 +38823,10 @@ var react_1 = __importDefault(require("react"));
 
 function EditPost(props) {
   var postTitle = react_1.default.useRef(null);
-  var postId = react_1.default.useRef(null);
   var postBody = react_1.default.useRef(null);
 
   var _a = react_1.default.useState({
     postTitle: "",
-    postId: "",
     postBody: "",
     imageUrl: ""
   }),
@@ -38834,7 +38834,6 @@ function EditPost(props) {
       setFormInput = _a[1];
 
   formInput.postTitle = props.post.postTitle;
-  formInput.postId = props.post.postId;
   formInput.postBody = props.post.postBody;
   formInput.imageUrl = props.post.imageUrl;
 
@@ -38880,7 +38879,7 @@ function EditPost(props) {
   }, react_1.default.createElement("div", {
     className: "row"
   }, react_1.default.createElement("div", {
-    className: "input-field col s9"
+    className: "input-field col s12"
   }, react_1.default.createElement("input", {
     placeholder: "Enter Title Here",
     id: "post_title",
@@ -38892,18 +38891,7 @@ function EditPost(props) {
     onChange: handleChange
   }), react_1.default.createElement("label", {
     htmlFor: "post_title"
-  }, "Title")), react_1.default.createElement("div", {
-    className: "input-field col s3"
-  }, react_1.default.createElement("input", {
-    placeholder: "Enter ID Here",
-    id: "post_id",
-    ref: postId,
-    type: "text",
-    className: "validate",
-    name: "postId",
-    disabled: true,
-    defaultValue: props.post.postId
-  }))), react_1.default.createElement("div", {
+  }, "Title"))), react_1.default.createElement("div", {
     className: "row"
   }, react_1.default.createElement("div", {
     className: "input-field col s12"
@@ -39076,7 +39064,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59650" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61676" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

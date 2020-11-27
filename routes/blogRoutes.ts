@@ -3,7 +3,7 @@ import { addNewUser, getUsers, getUserById, deleteUser } from "../controllers/us
 
 const routes = (app: any) => {
   app.route("/posts").get(getPosts).post(addNewPost);
-  app.route("/post/:postId").get(getPostById).put(updatePost).delete(deletePost);
+  app.route("/post/:_id").get(getPostById).put(updatePost).delete(deletePost);
 
   app.route("/users").get(getUsers).post(addNewUser);
   app.route("/user/:userId").get(getUserById).delete(deleteUser);

@@ -9,10 +9,7 @@ export default function BlogCard(props: any) {
   return (
     <>
       <li className="cards__item">
-        <Link
-          className="cards__item__link"
-          to={props.post && props.post.postId}
-        >
+        <Link className="cards__item__link" to={props.post && props.post._id}>
           <h4>{props.post.postTitle}</h4>
           <div className="cards__item__pic-wrap">
             <img

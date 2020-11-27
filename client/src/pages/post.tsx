@@ -19,7 +19,6 @@ export function Post() {
       .then(setPost)
       .catch(setError);
   }, []);
-  console.log("post:", post);
 
   return (
     <Page>

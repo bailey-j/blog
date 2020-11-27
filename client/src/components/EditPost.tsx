@@ -2,17 +2,14 @@ import React from "react";
 
 export default function EditPost(props: any) {
   const postTitle = React.useRef(null);
-  const postId = React.useRef(null);
   const postBody = React.useRef(null);
 
   const [formInput, setFormInput] = React.useState({
     postTitle: "",
-    postId: "",
     postBody: "",
     imageUrl: "",
   });
   formInput.postTitle = props.post.postTitle;
-  formInput.postId = props.post.postId;
   formInput.postBody = props.post.postBody;
   formInput.imageUrl = props.post.imageUrl;
 
@@ -56,7 +53,7 @@ export default function EditPost(props: any) {
           action="/admin"
         >
           <div className="row">
-            <div className="input-field col s9">
+            <div className="input-field col s12">
               <input
                 placeholder="Enter Title Here"
                 id="post_title"
@@ -68,18 +65,6 @@ export default function EditPost(props: any) {
                 onChange={handleChange}
               />
               <label htmlFor="post_title">Title</label>
-            </div>
-            <div className="input-field col s3">
-              <input
-                placeholder="Enter ID Here"
-                id="post_id"
-                ref={postId}
-                type="text"
-                className="validate"
-                name="postId"
-                disabled
-                defaultValue={props.post.postId}
-              />
             </div>
           </div>
           <div className="row">
