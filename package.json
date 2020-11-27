@@ -34,6 +34,8 @@
   "homepage": "https://github.com/bailey-j/blog#readme",
   "dependencies": {
     "axios": "^0.21.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "concurrently": "^5.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -41,7 +43,8 @@
     "moment": "^2.29.1",
     "mongoose": "^5.10.15",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "nodemon": "^2.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
