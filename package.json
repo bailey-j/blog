@@ -13,7 +13,6 @@
   },
   "scripts": {
     "client install": "npm install --prefix client",
-    "build": "tsc",
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm start --prefix client",

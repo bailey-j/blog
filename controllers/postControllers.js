@@ -3,7 +3,7 @@ import { Post, BodyProps } from "../models/postModel";
 
 mongoose.set('useFindAndModify', false);
 
-export const addNewPost = (req: any, res: any) => {
+export const addNewPost = (req, res) => {
   console.log(req.body)
   let newPost = new Post({
     datePublished: req.body.datePublished,
@@ -20,7 +20,7 @@ export const addNewPost = (req: any, res: any) => {
   });
 };
 
-export const getPosts = (req: any, res: any) => {
+export const getPosts = (req, res) => {
   Post.find({}, (err, Post) => {
     if (err) {
       res.send(err);
@@ -29,7 +29,7 @@ export const getPosts = (req: any, res: any) => {
   });
 };
 
-export const getPostById = (req: {params: any}, res: any) => {
+export const getPostById = (req , res) => {
   Post.findOne({ _id: req.params._id }, (err, Post) => {
     if (err) {
       res.send(err);
@@ -38,7 +38,7 @@ export const getPostById = (req: {params: any}, res: any) => {
   });
 };
 
-export const updatePost = (req: { body: any, params: any }, res: any) => {
+export const updatePost = (req, res) => {
   Post.findOneAndUpdate({ _id: req.params._id }, req.body, {new: true}, (err, Post) => {
     if (err) {
       res.send(err);
@@ -47,7 +47,7 @@ export const updatePost = (req: { body: any, params: any }, res: any) => {
   });
 };
 
-export const deletePost = (req: any, res: any) => {
+export const deletePost = (req, res) => {
   Post.deleteOne({ _id: req.params._id}, (err) => {
     if (err) {
       res.send(err);

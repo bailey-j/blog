@@ -1,7 +1,7 @@
 import { addNewPost, getPosts, getPostById, updatePost, deletePost } from "../controllers/postControllers";
 import { addNewUser, getUsers, getUserById, deleteUser } from "../controllers/userControllers";
 
-const routes = (app: any) => {
+const routes = (app) => {
   app.route("/posts").get(getPosts).post(addNewPost);
   app.route("/post/:_id").get(getPostById).put(updatePost).delete(deletePost);
 
