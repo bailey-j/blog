@@ -37,11 +37,10 @@ if(process.env.NODE_ENV == 'production'){
    app.get('*', (req, res) => {
      res.sendFile(path.resolve(process.cwd(), "client", "public", "index.html"))
    })
-
 }
 
-app.get("/", (req, res) =>
-  res.send(`Wow Our Server is Running on PORT: ${PORT}`)
-);
+// app.get("/", (req, res) =>
+//   res.send(`Wow Our Server is Running on PORT: ${PORT}`)
+// );
 
 app.listen(PORT, () => console.log(`We're running port ${PORT}`));
