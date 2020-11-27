@@ -38788,7 +38788,7 @@ function View() {
 }
 
 exports.View = View;
-},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/BlogList":"../src/components/BlogList.tsx"}],"../src/pages/edit.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/BlogList":"../src/components/BlogList.tsx"}],"../src/components/EditPost.tsx":[function(require,module,exports) {
 "use strict";
 
 var __assign = this && this.__assign || function () {
@@ -38816,13 +38816,10 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Edit = void 0;
 
 var react_1 = __importDefault(require("react"));
 
-var page_1 = require("../components/page");
-
-function Edit() {
+function EditPost(props) {
   var postTitle = react_1.default.useRef(null);
   var postId = react_1.default.useRef(null);
   var postBody = react_1.default.useRef(null);
@@ -38836,11 +38833,18 @@ function Edit() {
       formInput = _a[0],
       setFormInput = _a[1];
 
+  formInput.postTitle = props.post.postTitle;
+  formInput.postId = props.post.postId;
+  formInput.postBody = props.post.postBody;
+  formInput.imageUrl = props.post.imageUrl;
+
   var encode = function encode(data) {
     return Object.keys(data).map(function (key) {
       return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
     }).join("&");
   };
+
+  console.log(formInput);
 
   var handleChange = function handleChange(e) {
     var _a;
@@ -38852,13 +38856,13 @@ function Edit() {
     var requestOptions = {
       method: "PUT",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "multipart/form-data"
       },
       body: encode(__assign({
         "form-name": "add-post"
       }, formInput))
     };
-    fetch("http://localhost:3000/posts", requestOptions).then(function () {
+    fetch("http://localhost:3000/post/" + props.post.postId, requestOptions).then(function () {
       return alert("Sent!");
     }).catch(function (error) {
       return alert(error);
@@ -38866,13 +38870,7 @@ function Edit() {
     e.preventDefault();
   };
 
-  return react_1.default.createElement(page_1.Page, null, react_1.default.createElement("div", {
-    className: "hero-container"
-  }, react_1.default.createElement("h1", null, "Admin")), react_1.default.createElement("div", {
-    className: "container"
-  }, react_1.default.createElement("div", {
-    className: "section"
-  }, react_1.default.createElement("h4", null, "Edit Post"), react_1.default.createElement("div", {
+  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("div", {
     className: "container"
   }, react_1.default.createElement("form", {
     className: "col s12 center",
@@ -38890,7 +38888,7 @@ function Edit() {
     type: "text",
     className: "validate",
     name: "postTitle",
-    value: formInput.postTitle,
+    defaultValue: props.post.postTitle,
     onChange: handleChange
   }), react_1.default.createElement("label", {
     htmlFor: "post_title"
@@ -38903,11 +38901,9 @@ function Edit() {
     type: "text",
     className: "validate",
     name: "postId",
-    value: formInput.postId,
-    onChange: handleChange
-  }), react_1.default.createElement("label", {
-    htmlFor: "post_id"
-  }, "ID"))), react_1.default.createElement("div", {
+    disabled: true,
+    defaultValue: props.post.postId
+  }))), react_1.default.createElement("div", {
     className: "row"
   }, react_1.default.createElement("div", {
     className: "input-field col s12"
@@ -38916,7 +38912,7 @@ function Edit() {
     ref: postBody,
     className: "materialize-textarea",
     name: "postBody",
-    value: formInput.postBody,
+    defaultValue: props.post.postBody,
     onChange: handleChange
   }), react_1.default.createElement("label", {
     htmlFor: "post_body"
@@ -38929,18 +38925,74 @@ function Edit() {
     className: "validate",
     type: "text",
     name: "imageUrl",
-    value: formInput.imageUrl,
+    defaultValue: props.post.imageUrl,
     onChange: handleChange
   }), react_1.default.createElement("label", {
     htmlFor: "img_url"
   }, "Image URL"))), react_1.default.createElement("button", {
     className: "btn blue darken-1 waves-effect waves-light",
     type: "submit"
-  }, "Submit"))))));
+  }, "Submit"))));
+}
+
+exports.default = EditPost;
+},{"react":"../node_modules/react/index.js"}],"../src/pages/edit.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Edit = void 0;
+
+var react_1 = __importDefault(require("react"));
+
+var page_1 = require("../components/page");
+
+var EditPost_1 = __importDefault(require("../components/EditPost"));
+
+var react_router_dom_1 = require("react-router-dom");
+
+function Edit() {
+  var postId = react_router_dom_1.useParams().postId;
+
+  var _a = react_1.default.useState([]),
+      post = _a[0],
+      setPost = _a[1];
+
+  var _b = react_1.default.useState(""),
+      error = _b[0],
+      setError = _b[1];
+
+  react_1.default.useEffect(function () {
+    fetch("http://localhost:3000/post/" + postId, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(function (response) {
+      return response.json();
+    }).then(setPost).catch(setError);
+  }, []);
+  return react_1.default.createElement(page_1.Page, null, error && "" + error, react_1.default.createElement("div", {
+    className: "hero-container"
+  }, react_1.default.createElement("h1", null, "Admin")), react_1.default.createElement("div", {
+    className: "container"
+  }, react_1.default.createElement("div", {
+    className: "section"
+  }, react_1.default.createElement("h4", null, "Edit Post"), react_1.default.createElement("div", {
+    className: "main-container center"
+  }, post ? react_1.default.createElement(EditPost_1.default, {
+    post: post
+  }) : "Nothing to see here"))));
 }
 
 exports.Edit = Edit;
-},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx"}],"../src/index.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../components/page":"../src/components/page.tsx","../components/EditPost":"../src/components/EditPost.tsx","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/index.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -39024,7 +39076,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49696" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63056" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
