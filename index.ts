@@ -7,9 +7,12 @@ import routes from "./routes/blogRoutes";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+//configs
+const db = require("./config/keys").mongoURI;
+
 //mongo connection
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb+srv://user123:Googol%2123@cluster0.j6dq3.mongodb.net/blog?retryWrites=true&w=majority", {
+mongoose.connect(db, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

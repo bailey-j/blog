@@ -1,4 +1,3 @@
-import fileupload from 'express-fileupload'
 import mongoose from "mongoose";
 import { Post, BodyProps } from "../models/postModel";
 

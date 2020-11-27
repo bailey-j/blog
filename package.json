@@ -2,8 +2,7 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "Creating this blog site to put to use the tech stack that I've learnt in my internship",
-  "main": "index.tsx",
-  "type": "module",
+  "main": "index.ts",
   "babel": {
     "presets": [
       "@babel/preset-env",
@@ -12,9 +11,12 @@
     ]
   },
   "scripts": {
-    "test": "echo \"Error: no tests installed\" && exit 1",
+    "client install": "npm install --prefix client",
     "build": "tsc",
-    "start": "ts-node-dev index.ts"
+    "start": "tsc && node index.ts",
+    "server": "nodemon index.ts",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
   "dependencies": {
     "@types/cors": "^2.8.8",
     "axios": "^0.21.0",
+    "concurrently": "^5.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -52,6 +55,7 @@
     "@types/react-dom": "^16.9.9",
     "express-fileupload": "^1.2.0",
     "multer": "^1.4.2",
+    "nodemon": "^2.0.6",
     "ts-node-dev": "^1.0.0",
     "typescript": "^4.0.5"
   }
