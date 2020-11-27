@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyparser from "body-parser";
 import cors from "cors";
-import {routes} from "./routes/blogRoutes";
+import routes from "./routes/blogRoutes";
 import path from 'path'
 
 const app = express();
