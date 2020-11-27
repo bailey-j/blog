@@ -5,7 +5,7 @@ import cors from "cors";
 import routes from "./routes/blogRoutes";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 //mongo connection
 mongoose.Promise = global.Promise;
