@@ -28,6 +28,7 @@ app.use(bodyparser.json());
 
 //routes
 routes(app);
+const path = require('path'); var __dirname = path.resolve();
 
 //Serve static assets if in production
 if(process.env.NODE_ENV == 'production'){
