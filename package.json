@@ -4,11 +4,13 @@
   "description": "Creating this blog site to put to use the tech stack that I've learnt in my internship",
   "main": "index.js",
   "type": "module",
+  "engines": {
+    "node": "14.x"
+  },
   "babel": {
     "presets": [
       "@babel/preset-env",
-      "@babel/preset-react",
-      "@babel/preset-typescript"
+      "@babel/preset-react"
     ]
   },
   "scripts": {
@@ -31,7 +33,6 @@
   },
   "homepage": "https://github.com/bailey-j/blog#readme",
   "dependencies": {
-    "@types/cors": "^2.8.8",
     "axios": "^0.21.0",
     "concurrently": "^5.3.0",
     "cors": "^2.8.5",
