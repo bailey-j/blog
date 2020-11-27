@@ -9,7 +9,7 @@ const PORT = 3000;
 
 //mongo connection
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/blog", {
+mongoose.connect("mongodb+srv://user123:Googol%2123@cluster0.j6dq3.mongodb.net/blog?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
