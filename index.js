@@ -28,14 +28,14 @@ app.use(bodyparser.json());
 
 //routes
 routes(app);
-const path = require('path'); var __dirname = path.resolve();
+// const path = require('path'); var __dirname = path.resolve();
 
 //Serve static assets if in production
 if(process.env.NODE_ENV == 'production'){
    //static folder
    app.use(express.static('client/build'));
    app.get('*', (req, res) => {
-     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+     res.sendFile(path.resolve(process.cwd(), "client", "build", "index.html"))
    })
 
 }
