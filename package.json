@@ -31,7 +31,6 @@
   "bugs": {
     "url": "https://github.com/bailey-j/blog/issues"
   },
-  "homepage": "https://github.com/bailey-j/blog#readme",
   "dependencies": {
     "axios": "^0.21.0",
     "babel-cli": "^6.26.0",
