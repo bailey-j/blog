@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Creating this blog site to put to use the tech stack that I've learnt in my internship",
   "main": "index.js",
-  "type": "module",
   "babel": {
     "presets": [
       "@babel/preset-env",
