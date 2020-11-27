@@ -2,7 +2,7 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "Creating this blog site to put to use the tech stack that I've learnt in my internship",
-  "main": "index.ts",
+  "main": "index.js",
   "type": "module",
   "babel": {
     "presets": [
@@ -14,8 +14,8 @@
   "scripts": {
     "client install": "npm install --prefix client",
     "build": "tsc",
-    "start": "ts-node index.ts",
-    "server": "nodemon index.ts",
+    "start": "ts-node index.js",
+    "server": "nodemon index.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
