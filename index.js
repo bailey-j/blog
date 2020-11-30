@@ -7,7 +7,7 @@ import path from 'path'
 import mongoURI from "./config/keys.js"
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 //configs
 const db = mongoURI.mongoURI;
