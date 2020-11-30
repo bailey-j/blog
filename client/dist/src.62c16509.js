@@ -32423,7 +32423,7 @@ function Header() {
     className: "nav-links",
     onClick: closeMobileMenu
   }, "Admin")))), react_1.default.createElement("div", {
-    className: "navbar-container"
+    className: "nav-item"
   }, react_1.default.createElement("p", {
     className: "login"
   }, "Logged in as ", react_1.default.createElement("b", null, userName)))));
@@ -38241,6 +38241,7 @@ function BlogFeed() {
   react_1.default.useEffect(function () {
     fetch("http://localhost:3000/posts", {
       headers: {
+        "access-control-allow-origin": "*",
         "Content-Type": "application/json",
         Accept: "application/json"
       }
@@ -39064,7 +39065,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52166" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60860" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

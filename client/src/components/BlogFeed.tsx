@@ -8,6 +8,7 @@ export default function BlogFeed() {
   React.useEffect(() => {
     fetch(`http://localhost:3000/posts`, {
       headers: {
+        "access-control-allow-origin": "*",
         "Content-Type": "application/json",
         Accept: "application/json",
       },

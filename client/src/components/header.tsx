@@ -37,7 +37,7 @@ export default function Header() {
             </li>
           </ul>
         </div>
-        <div className="navbar-container">
+        <div className="nav-item">
           <p className="login">
             Logged in as <b>{userName}</b>
           </p>
