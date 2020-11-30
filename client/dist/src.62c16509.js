@@ -38239,7 +38239,7 @@ function BlogFeed() {
       setError = _b[1];
 
   react_1.default.useEffect(function () {
-    fetch("http://localhost:" + window.location.port + "/posts", {
+    fetch("/posts", {
       headers: {
         "access-control-allow-origin": "*",
         "Content-Type": "application/json",
