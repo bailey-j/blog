@@ -10,7 +10,7 @@ export function Edit() {
   const [error, setError] = React.useState("");
 
   React.useEffect(() => {
-    fetch(`http://localhost:3000/post/${postId}`, {
+    fetch(`post/${postId}`, {
       headers: {
         "Content-Type": "application/json",
       },

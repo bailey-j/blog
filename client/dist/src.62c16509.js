@@ -38321,6 +38321,16 @@ function NewsItem(props) {
       error = _b[0],
       setError = _b[1];
 
+  var _c = react_1.default.useState(true),
+      loading = _c[0],
+      isLoading = _c[1];
+
+  var wait = function wait(ms) {
+    return new Promise(function (resolve) {
+      return setTimeout(resolve, ms);
+    });
+  };
+
   react_1.default.useEffect(function () {
     fetch("https://hacker-news.firebaseio.com/v0/item/" + newsId + ".json", {
       headers: {
@@ -38333,7 +38343,10 @@ function NewsItem(props) {
       return setNewsItem(newsItem);
     }).catch(setError);
   }, []);
-  return react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement("div", null, react_1.default.createElement("h5", null, newsItem === null || newsItem === void 0 ? void 0 : newsItem.title), react_1.default.createElement("a", {
+  wait(900).then(function () {
+    return isLoading(false);
+  });
+  return react_1.default.createElement(react_1.default.Fragment, null, loading ? null : react_1.default.createElement("div", null, react_1.default.createElement("h5", null, newsItem === null || newsItem === void 0 ? void 0 : newsItem.title), react_1.default.createElement("a", {
     href: newsItem === null || newsItem === void 0 ? void 0 : newsItem.url
   }, react_1.default.createElement("p", null, "Find out more HERE..."))));
 }
@@ -38368,6 +38381,16 @@ function Tech() {
       error = _b[0],
       setError = _b[1];
 
+  var _c = react_1.default.useState(true),
+      loading = _c[0],
+      isLoading = _c[1];
+
+  var wait = function wait(ms) {
+    return new Promise(function (resolve) {
+      return setTimeout(resolve, ms);
+    });
+  };
+
   react_1.default.useEffect(function () {
     fetch("https://hacker-news.firebaseio.com/v0/jobstories.json", {
       headers: {
@@ -38380,13 +38403,16 @@ function Tech() {
       return setNews(news.splice(0, 20));
     }).catch(setError);
   }, []);
+  wait(1000).then(function () {
+    return isLoading(false);
+  });
   return react_1.default.createElement(page_1.Page, null, react_1.default.createElement("div", {
     className: "hero-container"
   }, react_1.default.createElement("h1", null, "Tech Jobs")), react_1.default.createElement("div", {
     className: "container"
   }, react_1.default.createElement("h3", null, "View the latest Tech jobs below (from Hacker News)"), react_1.default.createElement("div", {
     className: "cards__container"
-  }, react_1.default.createElement("ul", {
+  }, loading ? react_1.default.createElement("h6", null, "Loading...") : react_1.default.createElement("ul", {
     className: "cards__items"
   }, news.map(function (newsId, key) {
     return react_1.default.createElement("li", {
@@ -38517,7 +38543,7 @@ function Post() {
       setError = _b[1];
 
   react_1.default.useEffect(function () {
-    fetch("http://localhost:3000/post/" + postId, {
+    fetch("/post/" + postId, {
       headers: {
         "Content-Type": "application/json"
       }
@@ -38603,7 +38629,7 @@ function CreatePost() {
         "form-name": "add-post"
       }, formInput))
     };
-    fetch("http://localhost:3000/posts", requestOptions).then(function () {
+    fetch("/posts", requestOptions).then(function () {
       return alert("Sent!");
     }).catch(function (error) {
       return alert(error);
@@ -38627,7 +38653,7 @@ function CreatePost() {
   }, react_1.default.createElement("div", {
     className: "row"
   }, react_1.default.createElement("div", {
-    className: "input-field col s9"
+    className: "input-field col s12"
   }, react_1.default.createElement("input", {
     placeholder: "Enter Title Here",
     id: "post_title",
@@ -38639,20 +38665,7 @@ function CreatePost() {
     onChange: handleChange
   }), react_1.default.createElement("label", {
     htmlFor: "post_title"
-  }, "Title")), react_1.default.createElement("div", {
-    className: "input-field col s3"
-  }, react_1.default.createElement("input", {
-    placeholder: "Enter ID Here",
-    id: "post_id",
-    ref: postId,
-    type: "text",
-    className: "validate",
-    name: "postId",
-    value: formInput.postId,
-    onChange: handleChange
-  }), react_1.default.createElement("label", {
-    htmlFor: "post_id"
-  }, "ID"))), react_1.default.createElement("div", {
+  }, "Title"))), react_1.default.createElement("div", {
     className: "row"
   }, react_1.default.createElement("div", {
     className: "input-field col s12"
@@ -38756,7 +38769,7 @@ function View() {
       setError = _b[1];
 
   react_1.default.useEffect(function () {
-    fetch("http://localhost:3000/posts", {
+    fetch("/posts", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
@@ -38862,7 +38875,7 @@ function EditPost(props) {
         "form-name": "add-post"
       }, formInput))
     };
-    fetch("http://localhost:3000/post/" + props.post.postId, requestOptions).then(function () {
+    fetch("/post/" + props.post.postId, requestOptions).then(function () {
       return alert("Sent!");
     }).catch(function (error) {
       return alert(error);
@@ -38959,7 +38972,7 @@ function Edit() {
       setError = _b[1];
 
   react_1.default.useEffect(function () {
-    fetch("http://localhost:3000/post/" + postId, {
+    fetch("post/" + postId, {
       headers: {
         "Content-Type": "application/json"
       }

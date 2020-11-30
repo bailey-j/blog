@@ -37,7 +37,7 @@ export default function EditPost(props: any) {
         ...formInput,
       }),
     };
-    fetch(`http://localhost:3000/post/${props.post.postId}`, requestOptions)
+    fetch(`/post/${props.post.postId}`, requestOptions)
       .then(() => alert("Sent!"))
       .catch((error) => alert(error));
     e.preventDefault();

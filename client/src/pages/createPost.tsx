@@ -37,7 +37,7 @@ export function CreatePost() {
         ...formInput,
       }),
     };
-    fetch("http://localhost:3000/posts", requestOptions)
+    fetch("/posts", requestOptions)
       .then(() => alert("Sent!"))
       .catch((error) => alert(error));
     e.preventDefault();
@@ -59,7 +59,7 @@ export function CreatePost() {
               action="/admin"
             >
               <div className="row">
-                <div className="input-field col s9">
+                <div className="input-field col s12">
                   <input
                     placeholder="Enter Title Here"
                     id="post_title"
@@ -71,19 +71,6 @@ export function CreatePost() {
                     onChange={handleChange}
                   />
                   <label htmlFor="post_title">Title</label>
-                </div>
-                <div className="input-field col s3">
-                  <input
-                    placeholder="Enter ID Here"
-                    id="post_id"
-                    ref={postId}
-                    type="text"
-                    className="validate"
-                    name="postId"
-                    value={formInput.postId}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="post_id">ID</label>
                 </div>
               </div>
               <div className="row">

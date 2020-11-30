@@ -17,6 +17,9 @@ export default function NewsItem(props: any) {
 
   const [newsItem, setNewsItem] = React.useState<Item | undefined>(undefined);
   const [error, setError] = React.useState("");
+  const [loading, isLoading] = React.useState(true);
+
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   React.useEffect(() => {
     fetch(`https://hacker-news.firebaseio.com/v0/item/${newsId}.json`, {
@@ -30,14 +33,18 @@ export default function NewsItem(props: any) {
       .catch(setError);
   }, []);
 
+  wait(900).then(() => isLoading(false));
+
   return (
     <>
-      <div>
-        <h5>{newsItem?.title}</h5>
-        <a href={newsItem?.url}>
-          <p>Find out more HERE...</p>
-        </a>
-      </div>
+      {loading ? null : (
+        <div>
+          <h5>{newsItem?.title}</h5>
+          <a href={newsItem?.url}>
+            <p>Find out more HERE...</p>
+          </a>
+        </div>
+      )}
     </>
   );
 }

@@ -7,6 +7,9 @@ import NewsItem from "../components/NewsItem";
 export function Tech() {
   const [news, setNews] = React.useState<any[] | undefined>([]);
   const [error, setError] = React.useState("");
+  const [loading, isLoading] = React.useState(true);
+
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   React.useEffect(() => {
     fetch(`https://hacker-news.firebaseio.com/v0/jobstories.json`, {
@@ -17,9 +20,11 @@ export function Tech() {
     })
       .then((response) => response.json())
       .then((news) => setNews(news.splice(0, 20)))
+
       .catch(setError);
   }, []);
 
+  wait(1000).then(() => isLoading(false));
   return (
     <Page>
       <div className="hero-container">
@@ -28,13 +33,17 @@ export function Tech() {
       <div className="container">
         <h3>View the latest Tech jobs below (from Hacker News)</h3>
         <div className="cards__container">
-          <ul className="cards__items">
-            {news.map((newsId, key) => (
-              <li key={key}>
-                <NewsItem newsId={newsId} />
-              </li>
-            ))}
-          </ul>
+          {loading ? (
+            <h6>Loading...</h6>
+          ) : (
+            <ul className="cards__items">
+              {news.map((newsId, key) => (
+                <li key={key}>
+                  <NewsItem newsId={newsId} />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </Page>
