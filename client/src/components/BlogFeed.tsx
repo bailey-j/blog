@@ -6,7 +6,7 @@ export default function BlogFeed() {
   const [error, setError] = React.useState("");
 
   React.useEffect(() => {
-    fetch(`http://localhost:59245/posts`, {
+    fetch(`http://localhost:${process.env.PORT}/posts`, {
       headers: {
         "access-control-allow-origin": "*",
         "Content-Type": "application/json",
