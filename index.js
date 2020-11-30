@@ -7,7 +7,7 @@ import path from 'path'
 import mongoURI from "./config/keys.js"
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 //configs
 const db = mongoURI.mongoURI;
@@ -39,8 +39,8 @@ if(process.env.NODE_ENV == 'production'){
    })
 }
 
-// app.get("/", (req, res) =>
-//   res.send(`Wow Our Server is Running on PORT: ${PORT}`)
-// );
+app.get("/", (req, res) =>
+  res.send(`Wow Our Server is Running on PORT: ${PORT}`)
+);
 
 app.listen(PORT, () => console.log(`We're running port ${PORT}`));
