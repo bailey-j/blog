@@ -1,5 +1,5 @@
 import React from "react";
-import { Page } from "../components/page";
+import { Page } from "../components/Page";
 import EditPost from "../components/EditPost";
 import { useParams } from "react-router-dom";
 

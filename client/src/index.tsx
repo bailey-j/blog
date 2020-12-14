@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Home } from "./pages/home";
-import { Tech } from "./pages/tech";
-import { Admin } from "./pages/admin";
-import { Post } from "./pages/post";
-import { CreatePost } from "./pages/createPost";
-import { View } from "./pages/view";
-import { Edit } from "./pages/edit";
+import { Home } from "./pages/Home";
+import { Tech } from "./pages/Tech";
+import { Admin } from "./pages/Admin";
+import { Post } from "./pages/Post";
+import { CreatePost } from "./pages/CreatePost";
+import { View } from "./pages/View";
+import { Edit } from "./pages/Edit";
 
 const router = (
   <Router>
