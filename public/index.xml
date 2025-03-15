@@ -13,7 +13,7 @@
       <link>//localhost:1313/posts/my-first-post/</link>
       <pubDate>Sat, 15 Mar 2025 16:26:40 +0000</pubDate>
       <guid>//localhost:1313/posts/my-first-post/</guid>
-      <description>&lt;h2 class=&#34;group head-tag&#34; id=&#34;introduction&#34;&gt;Introduction&lt;a data-title-of-head class=&#34;group-hover:after:content-[&#39;__#&#39;] no-underline hover:text-[--hs-text-color-hover]&#34; href=&#34;#introduction&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;This is &lt;strong&gt;bold&lt;/strong&gt; text, and this is &lt;em&gt;emphasized&lt;/em&gt; text.&lt;/p&gt;&#xA;&lt;p&gt;Visit the &#xD;&#xA;&lt;a&#xD;&#xA;  href=&#34;https://gohugo.io&#34;&#xD;&#xA;  &#xD;&#xA;    target=&#34;_blank&#34;&#xD;&#xA;  &#xD;&#xA;  &gt;Hugo&lt;/a&#xD;&#xA;&gt;&#xD;&#xA; website!&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;This is &lt;strong&gt;bold&lt;/strong&gt; text, and this is &lt;em&gt;emphasized&lt;/em&gt; text.&lt;/p&gt;&#xA;&lt;p&gt;Visit the &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; website!&lt;/p&gt;</description>
     </item>
     <item>
       <title>Home</title>
