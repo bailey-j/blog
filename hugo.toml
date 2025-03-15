@@ -1,4 +1,4 @@
-baseURL = 'jozeenebailey.github.io'
+baseURL = 'personal'
 languageCode = 'en-gb'
 title = "Jozeene's Web Site"
 theme = 'ananke'
